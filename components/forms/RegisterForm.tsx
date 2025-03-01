@@ -141,7 +141,7 @@ const RegisterForm = ({ user }: { user: User }) => {
               control={form.control}
               name="phone"
               label="Phone Number"
-              placeholder="(555) 123-4567"
+              placeholder="(011) 987-6543"
             />
           </div>
 
@@ -187,9 +187,9 @@ const RegisterForm = ({ user }: { user: User }) => {
               control={form.control}
               name="address"
               label="Address"
-              placeholder="14 street, New york, NY - 5101"
+              placeholder="14 street, Sandton - 0404"
             />
-
+           
             <CustomFormField
               fieldType={FormFieldType.INPUT}
               control={form.control}
@@ -214,7 +214,7 @@ const RegisterForm = ({ user }: { user: User }) => {
               control={form.control}
               name="emergencyContactNumber"
               label="Emergency contact number"
-              placeholder="(555) 123-4567"
+              placeholder="(011) 987-6543"
             />
           </div>
         </section>

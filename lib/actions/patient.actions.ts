@@ -34,7 +34,7 @@ export const createUser = async (user: CreateUserParams) => {
         Query.equal("email", [user.email]),
       ]);
 
-      return existingUser.users[0];
+      return existingUser.users[0] || null;
     }
     console.error("An error occurred while creating a new user:", error);
   }
@@ -51,6 +51,7 @@ export const getUser = async (userId: string) => {
       "An error occurred while retrieving the user details:",
       error
     );
+    throw error;
   }
 };
 
@@ -79,7 +80,8 @@ export const registerPatient = async ({
       PATIENT_COLLECTION_ID!,
       ID.unique(),
       {
-        identificationDocumentId: file?.$id ? file.$id : null,
+        // identificationDocumentId: file?.$id ? file.$id : null,
+        identificationDocumentId: file?.$id || null,
         identificationDocumentUrl: file?.$id
           ? `${ENDPOINT}/storage/buckets/${BUCKET_ID}/files/${file.$id}/view??project=${PROJECT_ID}`
           : null,
@@ -90,6 +92,7 @@ export const registerPatient = async ({
     return parseStringify(newPatient);
   } catch (error) {
     console.error("An error occurred while creating a new patient:", error);
+    throw error;
   }
 };
 
@@ -102,11 +105,19 @@ export const getPatient = async (userId: string) => {
       [Query.equal("userId", [userId])]
     );
 
+    // Check if patient with UserId already exist
+    if (!patients.documents.length) {
+      console.warn(`No patient found for userId: ${userId}`)
+      return null;
+    }
+
     return parseStringify(patients.documents[0]);
   } catch (error) {
     console.error(
       "An error occurred while retrieving the patient details:",
       error
     );
+
+    throw error;
   }
 };
