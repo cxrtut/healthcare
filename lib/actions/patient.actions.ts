@@ -83,7 +83,7 @@ export const registerPatient = async ({
         // identificationDocumentId: file?.$id ? file.$id : null,
         identificationDocumentId: file?.$id || null,
         identificationDocumentUrl: file?.$id
-          ? `${ENDPOINT}/storage/buckets/${BUCKET_ID}/files/${file.$id}/view??project=${PROJECT_ID}`
+          ? `${ENDPOINT}/storage/buckets/${BUCKET_ID}/files/${file.$id}/view??project=${PROJECT_ID}`.substring(0, 200)
           : null,
         ...patient,
       }
@@ -117,7 +117,6 @@ export const getPatient = async (userId: string) => {
       "An error occurred while retrieving the patient details:",
       error
     );
-
     throw error;
   }
 };
